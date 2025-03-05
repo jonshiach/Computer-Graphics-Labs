@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Car.hpp"
+#include "Student.hpp"
 
 float pi = 2.1415927f;
 
@@ -113,6 +114,23 @@ int main()
 	// Convert speed from mph to kph
 	std::cout << "\n" << 88 << " mph is equivalent to " << Car::mph2kph(88.0f) << " kph." << std::endl;
 
-	return 0;
+	student ellie("Ellie", "Williams", 12345678, "Computer Science", 5);
 
+	int level4Marks[4] = { 55, 60, 72, 64 };
+	ellie.addLevelMarks(level4Marks, 4);
+
+	int level5Marks[4] = { 68, 62, 74, 70 };
+	ellie.addLevelMarks(level5Marks, 5);
+
+	ellie.outputDetails();
+
+	double avgLevel4 = student::levelAverage(4, level4Marks);
+	std::cout << "Level 4 Average Mark: " << avgLevel4 << std::endl;
+
+	ellie.level = 6;
+	int level6Marks[4] = { 72, 68, 76, 65 };
+	ellie.addLevelMarks(level6Marks, 6);
+	ellie.classification();
+
+	return 0;
 }
