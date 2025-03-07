@@ -55,16 +55,22 @@ int main( void )
 
     const float vertices[] =
     {
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-         0.0f,  0.5f, 0.0f
+        -0.9f, -0.5f, 0.0f, //triangle 1
+        -0.1f, -0.5f, 0.0f,
+        -0.5f,  0.5f, 0.0f,
+         0.1f, -0.5f, 0.0f, //triangle 2
+         0.9f, -0.5f, 0.0f,
+         0.5f,  0.5f, 0.0f
     };
 
     const float colours[] =
     {
         // R   G   B
+        1.0f, 0.0f, 0.0f, //triangle 1 (red)
         1.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, //triangle 2 (blue)
+        0.0f, 0.0f, 1.0f,
         0.0f, 0.0f, 1.0f
     };
 
@@ -108,7 +114,7 @@ int main( void )
                               0,         //stride
                               (void*)0); //offset
 
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, sizeof(vertices) / (3 * sizeof(float)));
         glDisableVertexAttribArray(0);
 
         glEnableVertexAttribArray(1);
