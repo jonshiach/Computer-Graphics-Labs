@@ -60,6 +60,14 @@ int main( void )
          0.0f,  0.5f, 0.0f
     };
 
+    const float colours[] =
+    {
+        // R   G   B
+        1.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f
+    };
+
     unsigned int VAO;
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -72,6 +80,11 @@ int main( void )
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    unsigned int colourBuffer;
+    glGenBuffers(1, &colourBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, colourBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(colours), colours, GL_STATIC_DRAW);
 
 	// Ensure we can capture keyboard inputs
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
@@ -97,6 +110,15 @@ int main( void )
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glDisableVertexAttribArray(0);
+
+        glEnableVertexAttribArray(1);
+        glBindBuffer(GL_ARRAY_BUFFER, colourBuffer);
+        glVertexAttribPointer(1,         //attribute
+							  3,         //size
+							  GL_FLOAT,  //type
+							  GL_FALSE,  //normalized?
+							  0,         //stride
+							  (void*)0); //offset   
         
 		// Swap buffers
 		glfwSwapBuffers(window);
