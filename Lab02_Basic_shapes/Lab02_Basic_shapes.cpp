@@ -64,6 +64,10 @@ int main( void )
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
+    unsigned int shaderID = LoadShaders("vertexShader.glsl","fragmentShader.glsl");
+
+    glUseProgram(shaderID);
+
     unsigned int VBO;
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -81,11 +85,27 @@ int main( void )
         // Clear the window
         glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glVertexAttribPointer(0,         //attribute
+                              3,         //size
+                              GL_FLOAT,  //type
+                              GL_FALSE,  //normalized?
+                              0,         //stride
+                              (void*)0); //offset
+
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDisableVertexAttribArray(0);
         
 		// Swap buffers
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
+    glDeleteBuffers(1, &VBO);
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteProgram(shaderID);
     
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
