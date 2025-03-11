@@ -57,20 +57,41 @@ int main( void )
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     
     // Define vertices
-    const float vertices[] = {
+    static const float vertices[] = {
         // x     y     z
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-         0.0f,  0.5f, 0.0f
+       /*-0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        0.5f,  0.5f, 0.0f,
+       -0.5f, -0.5f, 0.0f,
+        0.5f,  0.5f, 0.0f,
+       -0.5f,  0.5f, 0.0f*/
+
+       -0.5f, -0.5f, 0.0f,  // 0       3 -- 2
+        0.5f, -0.5f, 0.0f,  // 1       |  / |  
+        0.5f,  0.5f, 0.0f,  // 2       | /  |
+       -0.5f,  0.5f, 0.0f   // 3       0 -- 1
     };
 
     // define texture coordinates
-    const float uv[] = {
+    static const float uv[] = {
         // u   v
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-        0.5f, 1.0f
+        //0.0f,  0.0f,    // triangle 1
+        //1.0f,  0.0f,
+        //1.0f,  1.0f,
+        //0.0f,  0.0f,    // triangle 2
+        //1.0f,  1.0f,
+        //0.0f,  1.0f
+
+        0.0f,  0.0f,  // 0
+        1.0f,  0.0f,  // 1
+        1.0f,  1.0f,  // 2
+        0.0f,  1.0f,  // 3
     };
+
+    static const unsigned int indices[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
   
     // Create the Vertex Array Object (VAO)
     unsigned int VAO;
@@ -95,6 +116,11 @@ int main( void )
     unsigned int texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
+
+    unsigned int EBO;
+    glGenBuffers(1, &EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     const char *path = "../assets/crate.jpg";
     int width, height, nChannels;
@@ -137,8 +163,10 @@ int main( void )
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
         
         // Draw the triangle
-        glDrawArrays(GL_TRIANGLES, 0, sizeof(vertices) / sizeof(float));
+        glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
+
         glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
         
 		// Swap buffers
 		glfwSwapBuffers(window);
