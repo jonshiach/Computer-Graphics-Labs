@@ -82,10 +82,16 @@ int main( void )
         //1.0f,  1.0f,
         //0.0f,  1.0f
 
+        //exercise 1
+        //0.0f,  0.0f,  // 0
+        //6.0f,  0.0f,  // 1
+        //6.0f,  4.0f,  // 2
+        //0.0f,  4.0f,  // 3
+
         0.0f,  0.0f,  // 0
         1.0f,  0.0f,  // 1
         1.0f,  1.0f,  // 2
-        0.0f,  1.0f,  // 3
+        0.0f,  1.0f   // 3
     };
 
     static const unsigned int indices[] = {
@@ -146,17 +152,17 @@ int main( void )
     //stbi_image_free(data);
 
     // Load the textures   
-    unsigned int texture1 = loadTexture("../assets/crate.jpg");
+    //unsigned int texture1 = loadTexture("../assets/crate.jpg");
     unsigned int texture2 = loadTexture("../assets/mario.png");
     
     // Send the texture uniforms to the fragment shader
     glUseProgram(shaderID);
-    glUniform1i(glGetUniformLocation(shaderID, "texture1"), 0);
+    //glUniform1i(glGetUniformLocation(shaderID, "texture1"), 0);
     glUniform1i(glGetUniformLocation(shaderID, "texture2"), 1);
 
     // Bind the textures
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    //glActiveTexture(GL_TEXTURE0);
+    //glBindTexture(GL_TEXTURE_2D, texture1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
